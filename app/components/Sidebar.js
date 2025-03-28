@@ -58,7 +58,7 @@ export default function SideBar() {
               {isLeaderboardOpen && (
                 <ul className="absolute left-0 mt-1 w-48 bg-indigo-800 rounded-lg shadow-lg z-10">
                   <li className="p-2 hover:bg-indigo-700 rounded-t-lg">
-                    <Link href="/pages/dashboard/Leaderboard/global">Global</Link>
+                    <Link href="/pages/dashboard/Leaderboard">rank</Link>
                   </li>
                   <li className="p-2 hover:bg-indigo-700">
                     <Link href="/pages/dashboard/Leaderboard/friends">Friends</Link>
@@ -190,7 +190,7 @@ export default function SideBar() {
         <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white shadow-md border-t p-2">
           <nav className="flex justify-around">
             <Link
-              href="/dashboard"
+              href="/pages/dashboard"
               className="flex flex-col items-center text-indigo-600 hover:text-indigo-800"
             >
               <FiHome className="w-6 h-6" />
