@@ -20,102 +20,130 @@ const Navbar = () => {
 
     if (token) {
       setIsLoggedIn(true);
-      setUsername(storedUsername);
+      setUsername(storedUsername || "User");
       fetchNotifications(token);
     }
   }, []);
 
-  // ✅ Fetch Notifications from Backend
   const fetchNotifications = async (token) => {
     try {
-      const response = await axios.get("https://heath-tracker-backend.onrender.com/api/notifications", {
+      const response = await axios.get("http://localhost:3000/api/notifications", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setNotifications(response.data);
-      setUnreadCount(response.data.filter((n) => !n.read).length); // Count unread notifications
+      setUnreadCount(response.data.filter((n) => !n.read).length);
     } catch (error) {
       console.error("❌ Error fetching notifications:", error);
     }
   };
-  const handlelogout=()=>{
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    localStorage.removeItem("userId");
-    localStorage.removeItem("role");
-    window.location.reload();
 
-
-  }
-
-  // ✅ Mark Notifications as Read
   const markNotificationsAsRead = async () => {
     const token = localStorage.getItem("token");
     if (!token) return;
 
     try {
-      await axios.post("https://heath-tracker-backend.onrender.com/api/notifications/mark-as-read", {}, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      fetchNotifications(token); // Refresh notifications
+      await axios.post(
+        "http://localhost:3000/api/notifications/mark-as-read",
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      fetchNotifications(token);
       setUnreadCount(0);
     } catch (error) {
       console.error("❌ Error marking notifications as read:", error);
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("role");
+    window.location.reload();
+  };
+
   const toggleMenu = () => setMenuOpen(!menuOpen);
+  const toggleNotifications = () => setShowNotifications(!showNotifications);
   const toggleSettings = () => setShowSettings(!showSettings);
   const toggleProfile = () => setShowProfile(!showProfile);
 
   return (
-    <div className="top-0 z-50 shadow-md w-full sticky bg-white">
-      <nav className="bg-white text-gray-500 shadow-md px-6">
-        <div className="container mx-auto flex justify-between h-16 items-center">
+    <div className="top-0 z-50 sticky w-full bg-gradient-to-br from-indigo-50 to-green-50  text-black ">
+      <nav className="px-6 py-4">
+        <div className="container mx-auto flex justify-between items-center">
           {/* Logo */}
-          <h1 className="text-2xl font-mono text-black font-extrabold">
-            <Link href="/">MyHealth</Link>
+          <h1 className="text-2xl font-bold tracking-tight">
+            <Link href="/">HealthHub</Link>
           </h1>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8 font-medium">
-            <Link href="/" className="hover:text-blue-500">Home</Link>
-            <Link href="#" className="hover:text-blue-500">About</Link>
+          <div className="hidden md:flex space-x-6 items-center font-medium">
+            <Link href="/" className="hover:text-indigo-200 transition-colors">Home</Link>
+            <Link href="/About" className="hover:text-green-400 transition-colors">About</Link>
             {isLoggedIn && (
               <>
-                <Link href="/pages/dashboard" className="hover:text-blue-500">Dashboard</Link>
-                <Link href="/pages/dashboard/Journal" className="hover:text-blue-500">Journals</Link>
-                <Link href="/pages/dashboard/healthdata" className="hover:text-blue-500">healthdata</Link>
+                <Link href="/pages/dashboard" className="hover:text-indigo-200 transition-colors">
+                  Dashboard
+                </Link>
+                <Link href="/pages/dashboard/Journal" className="hover:text-indigo-200 transition-colors">
+                  Journals
+                </Link>
+                <Link href="/pages/dashboard/healthdata" className="hover:text-indigo-200 transition-colors">
+                  Health Data
+                </Link>
+                <Link href="/pages/dashboard/adddata" className="hover:text-indigo-200 transition-colors">
+                  Log Data
+                </Link>
               </>
             )}
           </div>
 
-          {/* User Profile & Actions (Only if Logged In) */}
+          {/* User Actions (Desktop & Mobile) */}
           {isLoggedIn && (
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="flex items-center space-x-4">
               {/* 🔔 Notifications */}
-              <div className="relative" onMouseEnter={() => setShowNotifications(true)} onMouseLeave={() => setShowNotifications(false)}>
-                <div className="relative cursor-pointer">
-                  <FiBell className="w-6 h-6 text-gray-600 hover:text-blue-600" />
+              <div className="relative">
+                <button onClick={toggleNotifications} className="relative focus:outline-none">
+                  <FiBell className="w-6 h-6 hover:text-indigo-200 transition-colors" />
                   {unreadCount > 0 && (
                     <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
                       {unreadCount}
                     </span>
                   )}
-                </div>
+                </button>
 
+                {/* Full-Screen Notification Panel */}
                 {showNotifications && (
-                  <div className="absolute right-0 mt-2 w-80 bg-white shadow-lg rounded-lg p-4 z-50">
-                    <h3 className="text-sm font-semibold mb-2">🔔 Notifications</h3>
+                  <div className="fixed inset-0 bg-gray-900 bg-opacity-95 text-white z-50 p-6 overflow-y-auto">
+                    <div className="flex justify-between items-center mb-6">
+                      <h3 className="text-xl font-semibold">🔔 Notifications</h3>
+                      <button onClick={toggleNotifications} className="text-2xl">
+                        <FiX />
+                      </button>
+                    </div>
                     {notifications.length === 0 ? (
-                      <p className="text-gray-500">No new notifications.</p>
+                      <p className="text-gray-400 text-center ">No new notifications.</p>
                     ) : (
-                      <ul className="space-y-2">
-                        {notifications.slice(0, 5).map((notification, index) => (
-                          <li key={index} className="p-2 border-b text-sm">{notification.message}</li>
+                      <ul className="space-y-4 ">
+                        {notifications.map((notification, index) => (
+                          <li
+                            key={index}
+                            className={`p-4 rounded-lg ${
+                              notification.read ? "bg-gray-800" : "bg-green-400"
+                            }`}
+                          >
+                            <p className="text-sm">{notification.message}</p>
+                            <p className="text-xs text-gray-400 mt-1 ">
+                              {new Date(notification.createdAt).toLocaleString()}
+                            </p>
+                          </li>
                         ))}
                       </ul>
                     )}
-                    <button onClick={markNotificationsAsRead} className="mt-2 px-4 py-1 bg-blue-500 text-white rounded w-full">
+                    <button
+                      onClick={markNotificationsAsRead}
+                      className="mt-6 w-full py-2 bg-indigo-500 hover:bg-indigo-600 rounded-lg transition-colors"
+                    >
                       ✔️ Mark All as Read
                     </button>
                   </div>
@@ -124,52 +152,113 @@ const Navbar = () => {
 
               {/* ⚙️ Settings */}
               <div className="relative">
-                <FiSettings className="w-6 h-6 text-gray-600 cursor-pointer hover:text-blue-600" onClick={toggleSettings} />
+                <button onClick={toggleSettings} className="focus:outline-none">
+                  <FiSettings className="w-6 h-6 hover:text-indigo-200 transition-colors" />
+                </button>
                 {showSettings && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg p-4 z-50">
-                    <Link href="/pages/dashbaord/settings" className="block p-2 hover:bg-gray-100">🔧 General Settings</Link>
-                    <Link href="#" className="block p-2 hover:bg-gray-100">🔒 Privacy</Link>
-                    <button onClick={toggleSettings} className="w-full text-left p-2 hover:bg-gray-100">❌ Close</button>
+                  <div className="absolute right-0 mt-2 w-48 bg-white text-gray-700 shadow-lg rounded-lg p-4 z-50">
+                    <Link href="/pages/dashboard/settings" className="block p-2 hover:bg-indigo-50">
+                      General Settings
+                    </Link>
+                    <Link href="#" className="block p-2 hover:bg-indigo-50">
+                      Privacy
+                    </Link>
+                    <button onClick={toggleSettings} className="w-full text-left p-2 hover:bg-indigo-50">
+                       Close
+                    </button>
                   </div>
                 )}
               </div>
 
-              {/* 👤 Profile */}
-              <div className="relative">
-                <div className="flex items-center space-x-2 cursor-pointer" onClick={toggleProfile}>
-                  <img src="https://via.placeholder.com/40" alt="User" className="w-10 h-10 rounded-full" />
-                  <span className="text-gray-700 font-medium">{username}</span>
+              {/* 👤 Profile (Desktop Only) */}
+              <div className="hidden md:block relative">
+                <div
+                  className="flex items-center space-x-2 cursor-pointer"
+                  onClick={toggleProfile}
+                >
+                  <img
+                    src="https://via.placeholder.com/40"
+                    alt="User"
+                    className="w-10 h-10 rounded-full border-2 border-indigo-200"
+                  />
+                  <span className="font-medium">{username}</span>
                 </div>
                 {showProfile && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg p-4 z-50">
-                    <Link href="/pages/dashboard/Profile" className="block p-2 hover:bg-gray-100">👤 View Profile</Link>
-                    <button onClick={handlelogout} className="block p-2 hover:bg-gray-100 text-red-500  items-center">
+                  <div className="absolute right-0 mt-2 w-48 bg-white text-gray-700 shadow-lg rounded-lg p-4 z-50">
+                    <Link href="/pages/dashboard/Profile" className="block p-2 hover:bg-indigo-50">
+                      👤 View Profile
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center w-full text-left p-2 hover:bg-indigo-50 text-red-500"
+                    >
                       <FiLogOut className="mr-2" /> Logout
                     </button>
-                    <button onClick={toggleProfile} className="w-full text-left p-2 hover:bg-gray-100">Close</button>
+                    <button onClick={toggleProfile} className="w-full text-left p-2 hover:bg-indigo-50">
+                      Close
+                    </button>
                   </div>
                 )}
+              </div>
+
+              {/* 🍔 Hamburger (Mobile Only) */}
+              <div className="md:hidden">
+                <button onClick={toggleMenu} className="focus:outline-none">
+                  {menuOpen ? <FiX className="w-8 h-8" /> : <FiMenu className="w-8 h-8" />}
+                </button>
               </div>
             </div>
           )}
-
-          {/* 🍔 Mobile Menu Button */}
-          <div className="md:hidden">
-            <button onClick={toggleMenu} className="text-xl focus:outline-none">
-              {menuOpen ? <FiX className="w-8 h-8" /> : <FiMenu className="w-8 h-8" />}
-            </button>
-          </div>
         </div>
 
         {/* 📱 Mobile Menu */}
         {menuOpen && (
-          <div className="md:hidden bg-white border-t absolute top-16 left-0 w-full flex flex-col items-center p-4 space-y-4 shadow-md">
-            <Link href="/" onClick={() => setMenuOpen(false)}>Home</Link>
-            <Link href="/About" onClick={() => setMenuOpen(false)}>About</Link>
+          <div className="md:hidden absolute top-16 left-32 w-full bg-white text-black shadow-md p-6 space-y-4">
+            <Link href="/" onClick={toggleMenu} className="block py-2 hover:bg-indigo-600 rounded">
+              Home
+            </Link>
+            <Link href="/About" onClick={toggleMenu} className="block py-2 hover:bg-indigo-600 rounded">
+              About
+            </Link>
             {isLoggedIn && (
               <>
-                <Link href="/pages/dashboard" onClick={() => setMenuOpen(false)}>Dashboard</Link>
-                <Link href="/Projects" onClick={() => setMenuOpen(false)}>Health Metrics</Link>
+                <Link
+                  href="/pages/dashboard"
+                  onClick={toggleMenu}
+                  className="block py-2 hover:bg-indigo-600 rounded"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  href="/pages/dashboard/Journal"
+                  onClick={toggleMenu}
+                  className="block py-2 hover:bg-indigo-600 rounded"
+                >
+                  Journals
+                </Link>
+                <Link
+                  href="/pages/dashboard/healthdata"
+                  onClick={toggleMenu}
+                  className="block py-2 hover:bg-indigo-600 rounded"
+                >
+                  Health Data
+                </Link>
+                <Link
+                  href="/pages/dashboard/Profile"
+                  onClick={toggleMenu}
+                  className="block py-2 hover:bg-indigo-600 rounded"
+                >
+                  Profile
+                </Link>
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    toggleMenu();
+                  }}
+                  className="flex items-center w-full py-2 hover:bg-indigo-600 rounded text-red-300"
+                >
+                  <FiLogOut className="mr-2" /> Logout
+                </button>
               </>
             )}
           </div>

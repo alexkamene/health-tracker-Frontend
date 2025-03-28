@@ -9,7 +9,7 @@ const ForgotPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://heath-tracker-backend.onrender.com/forgotpassword", { email });
+      const response = await axios.post("http://localhost:3000/forgotpassword", { email });
       setMessage(response.data.message);
     } catch (error) {
       setMessage(error.response?.data?.error || "Failed to send reset email.");

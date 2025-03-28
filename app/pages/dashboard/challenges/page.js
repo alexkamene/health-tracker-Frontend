@@ -16,7 +16,8 @@ const GamifiedDashboard = () => {
   const fetchUser = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("https://heath-tracker-backend.onrender.com/user/profile", {
+      if (!token) window.location.href = "/login";
+      const response = await axios.get("http://localhost:3000/user/profile", {
 
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -29,8 +30,8 @@ const GamifiedDashboard = () => {
 
   const fetchLeaderboard = async () => {
     try {
-      const response = await axios.get("https://heath-tracker-backend.onrender.com/user/leaderboard");
-      
+      const response = await axios.get("http://localhost:3000/user/leaderboard");
+      if (!token) window.location.href = "/login";
       setLeaderboard(response.data);
     } catch (error) {
       console.error("❌ Error fetching leaderboard:", error);
