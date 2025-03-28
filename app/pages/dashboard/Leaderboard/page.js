@@ -12,7 +12,7 @@ const UserXP = () => {
     const fetchXP = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:3000/user/xp", {
+        const response = await axios.get("https://heath-tracker-backend.onrender.com/user/xp", {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log(response.data)

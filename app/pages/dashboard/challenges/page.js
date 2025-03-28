@@ -17,7 +17,7 @@ const GamifiedDashboard = () => {
     try {
       const token = localStorage.getItem("token");
       if (!token) window.location.href = "/login";
-      const response = await axios.get("http://localhost:3000/user/profile", {
+      const response = await axios.get("https://heath-tracker-backend.onrender.com/user/profile", {
 
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -30,7 +30,7 @@ const GamifiedDashboard = () => {
 
   const fetchLeaderboard = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/user/leaderboard");
+      const response = await axios.get("https://heath-tracker-backend.onrender.com/user/leaderboard");
       if (!token) window.location.href = "/login";
       setLeaderboard(response.data);
     } catch (error) {

@@ -36,18 +36,18 @@ const AnalyticsDashboard = () => {
     if (!token) window.location.href = "/login";
 
     try {
-      const healthResponse = await axios.get("http://localhost:3000/healthdata", {
+      const healthResponse = await axios.get("https://heath-tracker-backend.onrender.com/healthdata", {
         headers: { Authorization: `Bearer ${token}` },
         params: { startDate, endDate },
       });
       setHealthData(healthResponse.data);
 
-      const journalResponse = await axios.get("http://localhost:3000/api/journal", {
+      const journalResponse = await axios.get("https://heath-tracker-backend.onrender.com/api/journal", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setJournalEntries(journalResponse.data);
 
-      const profileResponse = await axios.get("http://localhost:3000/user/profile", {
+      const profileResponse = await axios.get("https://heath-tracker-backend.onrender.com/user/profile", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setProfile({
@@ -103,7 +103,7 @@ const AnalyticsDashboard = () => {
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:3000/api/healthdata/${id}`, {
+      await axios.delete(`https://heath-tracker-backend.onrender.com/api/healthdata/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setHealthData(healthData.filter((data) => data._id !== id));

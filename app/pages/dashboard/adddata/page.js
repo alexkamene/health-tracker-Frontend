@@ -24,7 +24,7 @@ const LogHealthData = () => {
     try {
       const token = localStorage.getItem("token");
       if (!token) window.location.href = "/login";
-      const response = await axios.get("http://localhost:3000/healthdata", {
+      const response = await axios.get("https://heath-tracker-backend.onrender.com/healthdata", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setHealthData(response.data);
@@ -64,7 +64,7 @@ const LogHealthData = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.post("http://localhost:3000/log/fitness", fitnessData, {
+      const response = await axios.post("https://heath-tracker-backend.onrender.com/log/fitness", fitnessData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("🎉 Fitness data logged successfully!", { position: "top-right" });
@@ -83,7 +83,7 @@ const LogHealthData = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.post("http://localhost:3000/log/wellness", wellnessData, {
+      const response = await axios.post("https://heath-tracker-backend.onrender.com/log/wellness", wellnessData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("🎉 Wellness data logged successfully!", { position: "top-right" });

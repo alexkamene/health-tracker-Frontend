@@ -44,7 +44,7 @@ const Dashboard = () => {
     if (!token) window.location.href = "/login";
 
     try {
-      const response = await axios.get("http://localhost:3000/healthdata", {
+      const response = await axios.get("https://heath-tracker-backend.onrender.com/healthdata", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setHealthData(response.data);
@@ -74,7 +74,7 @@ const Dashboard = () => {
 
     setLoadingInsights(true);
     try {
-      const response = await axios.get("http://localhost:3000/api/healthinsights", {
+      const response = await axios.get("https://heath-tracker-backend.onrender.com/api/healthinsights", {
         headers: { Authorization: `Bearer ${token}` },
         params: { startDate, endDate },
       });

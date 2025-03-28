@@ -20,7 +20,7 @@ const SecurityLogs = () => {
 
   const fetchSecurityLogs = async (authToken) => {
     try {
-      const response = await axios.get("http://localhost:3000/securitylogs", {
+      const response = await axios.get("https://heath-tracker-backend.onrender.com/securitylogs", {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       setLogs(response.data);

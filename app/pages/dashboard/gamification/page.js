@@ -30,17 +30,17 @@ const GamificationDashboard = () => {
       if (!token) window.location.href = "/login";
 
       try {
-        const healthResponse = await axios.get("http://localhost:3000/healthdata", {
+        const healthResponse = await axios.get("https://heath-tracker-backend.onrender.com/healthdata", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setHealthData(healthResponse.data);
 
-        const journalResponse = await axios.get("http://localhost:3000/api/journal", {
+        const journalResponse = await axios.get("https://heath-tracker-backend.onrender.com/api/journal", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setJournalEntries(journalResponse.data);
 
-        const profileResponse = await axios.get("http://localhost:3000/user/profile", {
+        const profileResponse = await axios.get("https://heath-tracker-backend.onrender.com/user/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setProfile({
@@ -63,7 +63,7 @@ const GamificationDashboard = () => {
   }, []);
 const fetchLeaderboard = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/user/leaderboard");
+      const response = await axios.get("https://heath-tracker-backend.onrender.com/user/leaderboard");
       
       setLeaderboard(response.data);
     } catch (error) {

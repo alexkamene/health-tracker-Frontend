@@ -17,7 +17,7 @@ const HealthJournal = () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) window.location.href = "/login";
-        const response = await axios.get("http://localhost:3000/api/journal", {
+        const response = await axios.get("https://heath-tracker-backend.onrender.com/api/journal", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setJournalEntries(response.data);
@@ -37,7 +37,7 @@ const HealthJournal = () => {
       const token = localStorage.getItem("token");
       
       const response = await axios.post(
-        "http://localhost:3000/api/journal",
+        "https://heath-tracker-backend.onrender.com/api/journal",
         { entry },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -57,7 +57,7 @@ const HealthJournal = () => {
   const handleDelete = async (entryId) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:3000/api/journal/${entryId}`, {
+      await axios.delete(`https://heath-tracker-backend.onrender.com/api/journal/${entryId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

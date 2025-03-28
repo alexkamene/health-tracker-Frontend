@@ -44,7 +44,7 @@ export default function HealthCalendar() {
     setLoadingReminders(true);
     const token = localStorage.getItem("token");
     try {
-      const response = await axios.get("http://localhost:3000/api/reminders", {
+      const response = await axios.get("https://heath-tracker-backend.onrender.com/api/reminders", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setReminders(response.data);
@@ -62,7 +62,7 @@ export default function HealthCalendar() {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const response = await axios.get("http://localhost:3000/healthdata", {
+      const response = await axios.get("https://heath-tracker-backend.onrender.com/healthdata", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -83,7 +83,7 @@ export default function HealthCalendar() {
     e.preventDefault();
     const token = localStorage.getItem("token");
     try {
-      await axios.post("http://localhost:3000/reminder", newReminder, {
+      await axios.post("https://heath-tracker-backend.onrender.com/reminder", newReminder, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Reminder Added Successfully!");
@@ -104,7 +104,7 @@ export default function HealthCalendar() {
     const token = localStorage.getItem("token");
     try {
       await axios.put(
-        `http://localhost:3000/reminder/${id}/complete`,
+        `https://heath-tracker-backend.onrender.com/reminder/${id}/complete`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -121,7 +121,7 @@ export default function HealthCalendar() {
   const handleDeleteReminder = async (id) => {
     const token = localStorage.getItem("token");
     try {
-      await axios.delete(`http://localhost:3000/reminder/${id}`, {
+      await axios.delete(`https://heath-tracker-backend.onrender.com/reminder/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Reminder deleted successfully!");

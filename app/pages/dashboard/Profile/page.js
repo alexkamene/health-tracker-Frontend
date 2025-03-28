@@ -32,7 +32,7 @@ const Profile = () => {
       const token = localStorage.getItem("token");
       if (!token) window.location.href = "/login";
       try {
-        const response = await axios.get("http://localhost:3000/user/profile", {
+        const response = await axios.get("https://heath-tracker-backend.onrender.com/user/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
         const userData = response.data;
@@ -55,7 +55,7 @@ const Profile = () => {
     const fetchJournalEntries = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:3000/api/journal", {
+        const response = await axios.get("https://heath-tracker-backend.onrender.com/api/journal", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setJournalEntries(response.data);
@@ -79,7 +79,7 @@ const Profile = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      await axios.put("http://localhost:3000/profile", profile, {
+      await axios.put("https://heath-tracker-backend.onrender.com/profile", profile, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMessage("✅ Profile updated successfully!");
@@ -97,7 +97,7 @@ const Profile = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        "http://localhost:3000/changepassword",
+        "https://heath-tracker-backend.onrender.com/changepassword",
         { oldPassword, newPassword },
         { headers: { Authorization: `Bearer ${token}` } }
       );

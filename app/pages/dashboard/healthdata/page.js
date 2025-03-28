@@ -31,7 +31,7 @@ export default function HealthTracker() {
     if (!token) window.location.href = "/login";
 
     try {
-      const response = await axios.get("http://localhost:3000/healthdata", {
+      const response = await axios.get("https://heath-tracker-backend.onrender.com/healthdata", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setHealthData(response.data);
@@ -52,7 +52,7 @@ export default function HealthTracker() {
     if (!token) return;
 
     try {
-      await axios.post("http://localhost:3000/healthdata", newEntry, {
+      await axios.post("https://heath-tracker-backend.onrender.com/healthdata", newEntry, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -85,7 +85,7 @@ export default function HealthTracker() {
   const handleDelete = async () => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:3000/api/healthdata/${deleteId}`, {
+      await axios.delete(`https://heath-tracker-backend.onrender.com/api/healthdata/${deleteId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

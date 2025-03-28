@@ -27,7 +27,7 @@ const Navbar = () => {
 
   const fetchNotifications = async (token) => {
     try {
-      const response = await axios.get("http://localhost:3000/api/notifications", {
+      const response = await axios.get("https://heath-tracker-backend.onrender.com/api/notifications", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setNotifications(response.data);
@@ -43,7 +43,7 @@ const Navbar = () => {
 
     try {
       await axios.post(
-        "http://localhost:3000/api/notifications/mark-as-read",
+        "https://heath-tracker-backend.onrender.com/api/notifications/mark-as-read",
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

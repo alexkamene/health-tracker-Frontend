@@ -38,7 +38,7 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:3000/api/register", {
+      const res = await axios.post("https://heath-tracker-backend.onrender.com/api/register", {
         username,
         email,
         password,
