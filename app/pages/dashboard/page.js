@@ -188,7 +188,11 @@ const Dashboard = () => {
           <h3 className="text-xl font-semibold mb-4 text-purple-600">🔍 AI Health Insights</h3>
           {insights ? (
             <div className="text-gray-700">
-              <p><span className="font-semibold text-indigo-600">Total Steps:</span> {insights.totalSteps.toLocaleString()}</p>
+            <p>
+  <span className="font-semibold text-indigo-600">Total Steps:</span> 
+  {(insights?.totalSteps ?? 0).toLocaleString()}
+</p>
+
               <p><span className="font-semibold text-indigo-600">Average Sleep:</span> {insights.avgSleep} hrs</p>
               <p><span className="font-semibold text-indigo-600">Average Heart Rate:</span> {insights.avgHeartRate} BPM</p>
               <p className="mt-2 text-green-600"><span className="font-semibold">Recommendation:</span> {insights.recommendation}</p>
