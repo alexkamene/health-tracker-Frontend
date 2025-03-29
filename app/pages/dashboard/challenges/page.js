@@ -31,7 +31,7 @@ const GamifiedDashboard = () => {
   const fetchLeaderboard = async () => {
     try {
       const response = await axios.get("https://heath-tracker-backend.onrender.com/user/leaderboard");
-      if (!token) window.location.href = "/login";
+     
       setLeaderboard(response.data);
     } catch (error) {
       console.error("❌ Error fetching leaderboard:", error);
