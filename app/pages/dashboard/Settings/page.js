@@ -7,6 +7,7 @@ import autoTable from "jspdf-autotable";
 import { FiDownload, FiFilter, FiLock, FiShield, FiAlertTriangle } from "react-icons/fi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
 
 const SecurityLogs = () => {
   const [logs, setLogs] = useState([]);
@@ -120,6 +121,23 @@ const SecurityLogs = () => {
         <h1 className="text-3xl md:text-4xl font-extrabold text-center mb-8 text-gray-900 animate-fade-in-down">
           <span className="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">🔒 Security Logs</span>
         </h1>
+        {/* enalbel two factor authentication */}
+
+        <div className="bg-gradient-to-br from-indigo-600 to-purple-600 p-6 rounded-2xl shadow-xl text-white mb-6 animate-fade-in-down">
+
+          <h3 className="text-xl font-bold flex items-center gap-2">
+
+            <FiLock className="text-yellow-300" /> Enable Two-Factor Authentication
+          </h3>
+          
+          <Link href="/Enabl2Fauth" className="text-yellow-200 underline mt-2">Click here to set up</Link>
+
+          <p className="text-gray-200 mt-2">Secure your account with an extra layer of protection.</p>
+
+          </div>
+
+
+
 
         {/* Filters */}
         <div className="bg-white p-6 rounded-2xl shadow-xl mb-6 animate-slide-in-left">
@@ -150,6 +168,9 @@ const SecurityLogs = () => {
         {/* Security Logs Card */}
         <div className="bg-white p-6 rounded-2xl shadow-xl animate-slide-in-right">
           <div className="flex justify-between items-center mb-4">
+            
+
+
             <h3 className="text-xl font-bold flex items-center gap-2 text-gray-900">
               <FiShield className="text-indigo-500" /> Logged Security Events
             </h3>
