@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
+import { useRouter } from "next/navigation"; // Import useRouter for navigation
 import { FiBell, FiSettings, FiMenu, FiX, FiUser, FiLogOut } from "react-icons/fi";
 
 const Navbar = () => {
@@ -13,7 +14,9 @@ const Navbar = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const router = useRouter(); // Initialize router
 
+  // Check login status and fetch notifications
   useEffect(() => {
     const token = localStorage.getItem("token");
     const storedUsername = localStorage.getItem("username");
@@ -22,8 +25,11 @@ const Navbar = () => {
       setIsLoggedIn(true);
       setUsername(storedUsername || "User");
       fetchNotifications(token);
+    } else {
+      setIsLoggedIn(false); // Ensure state updates if no token
+      setUsername("");
     }
-  }, []);
+  }, []); // Empty dependency array, runs only on mount
 
   const fetchNotifications = async (token) => {
     try {
@@ -55,11 +61,21 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
+    // Clear localStorage
     localStorage.removeItem("token");
     localStorage.removeItem("username");
     localStorage.removeItem("userId");
     localStorage.removeItem("role");
-    window.location.reload();
+
+    // Update state immediately
+    setIsLoggedIn(false);
+    setUsername("");
+    setNotifications([]);
+    setUnreadCount(0);
+    setMenuOpen(false); // Close mobile menu if open
+
+    // Redirect to login page without reloading
+    router.push("/login");
   };
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
@@ -68,7 +84,7 @@ const Navbar = () => {
   const toggleProfile = () => setShowProfile(!showProfile);
 
   return (
-    <div className="top-0 z-50 sticky w-full bg-gradient-to-br from-indigo-50 to-green-50  text-black ">
+    <div className="top-0 z-50 sticky w-full bg-gradient-to-br from-indigo-50 to-green-50 text-black">
       <nav className="px-6 py-4">
         <div className="container mx-auto flex justify-between items-center">
           {/* Logo */}
@@ -112,7 +128,6 @@ const Navbar = () => {
                   )}
                 </button>
 
-                {/* Full-Screen Notification Panel */}
                 {showNotifications && (
                   <div className="fixed inset-0 bg-gray-900 bg-opacity-95 text-white z-50 p-6 overflow-y-auto">
                     <div className="flex justify-between items-center mb-6">
@@ -122,9 +137,9 @@ const Navbar = () => {
                       </button>
                     </div>
                     {notifications.length === 0 ? (
-                      <p className="text-gray-400 text-center ">No new notifications.</p>
+                      <p className="text-gray-400 text-center">No new notifications.</p>
                     ) : (
-                      <ul className="space-y-4 ">
+                      <ul className="space-y-4">
                         {notifications.map((notification, index) => (
                           <li
                             key={index}
@@ -133,7 +148,7 @@ const Navbar = () => {
                             }`}
                           >
                             <p className="text-sm">{notification.message}</p>
-                            <p className="text-xs text-gray-400 mt-1 ">
+                            <p className="text-xs text-gray-400 mt-1">
                               {new Date(notification.createdAt).toLocaleString()}
                             </p>
                           </li>
@@ -144,7 +159,7 @@ const Navbar = () => {
                       onClick={markNotificationsAsRead}
                       className="mt-6 w-full py-2 bg-indigo-500 hover:bg-indigo-600 rounded-lg transition-colors"
                     >
-                      ✔️ Mark All as Read
+                     Mark All as Read
                     </button>
                   </div>
                 )}
@@ -157,14 +172,12 @@ const Navbar = () => {
                 </button>
                 {showSettings && (
                   <div className="absolute right-0 mt-2 w-48 bg-white text-gray-700 shadow-lg rounded-lg p-4 z-50">
-                    <Link href="/pages/dashboard/settings" className="block p-2 hover:bg-indigo-50">
-                      General Settings
+                    <Link href="/pages/dashboard/Settings" className="block p-2 hover:bg-indigo-50">
+                      Security log
                     </Link>
-                    <Link href="#" className="block p-2 hover:bg-indigo-50">
-                      Privacy
-                    </Link>
+                    
                     <button onClick={toggleSettings} className="w-full text-left p-2 hover:bg-indigo-50">
-                       Close
+                      Close
                     </button>
                   </div>
                 )}
@@ -253,7 +266,6 @@ const Navbar = () => {
                 <button
                   onClick={() => {
                     handleLogout();
-                    toggleMenu();
                   }}
                   className="flex items-center w-full py-2 hover:bg-indigo-600 rounded text-red-300"
                 >
