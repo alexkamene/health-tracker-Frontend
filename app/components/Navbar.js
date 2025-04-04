@@ -173,7 +173,11 @@ const Navbar = () => {
                 {showSettings && (
                   <div className="absolute right-0 mt-2 w-48 bg-white text-gray-700 shadow-lg rounded-lg p-4 z-50">
                     <Link href="/pages/dashboard/Settings" className="block p-2 hover:bg-indigo-50">
+<<<<<<< HEAD
                       Security log
+=======
+                      Security logs
+>>>>>>> 4051fcd6a9e131cd93274a0d2360bf047e3fd82a
                     </Link>
                     
                     <button onClick={toggleSettings} className="w-full text-left p-2 hover:bg-indigo-50">

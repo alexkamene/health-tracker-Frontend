@@ -7,7 +7,10 @@ import autoTable from "jspdf-autotable";
 import { FiDownload, FiFilter, FiLock, FiShield, FiAlertTriangle } from "react-icons/fi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+<<<<<<< HEAD
 import Link from "next/link";
+=======
+>>>>>>> 4051fcd6a9e131cd93274a0d2360bf047e3fd82a
 
 const SecurityLogs = () => {
   const [logs, setLogs] = useState([]);
@@ -121,6 +124,7 @@ const SecurityLogs = () => {
         <h1 className="text-3xl md:text-4xl font-extrabold text-center mb-8 text-gray-900 animate-fade-in-down">
           <span className="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">🔒 Security Logs</span>
         </h1>
+<<<<<<< HEAD
         {/* enalbel two factor authentication */}
 
         <div className="bg-gradient-to-br from-indigo-600 to-purple-600 p-6 rounded-2xl shadow-xl text-white mb-6 animate-fade-in-down">
@@ -163,14 +167,44 @@ const SecurityLogs = () => {
               <FiFilter /> Filter Logs
             </button>
           </div>
+=======
+
+        {/* Filters */}
+        <div className="bg-white p-6 rounded-2xl shadow-xl mb-6 animate-slide-in-left">
+          <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
+            <div className="flex gap-4">
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className="p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                className="p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
+            <button
+              onClick={applyFiltersAndSort}
+              className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white py-2 px-4 rounded-lg font-semibold flex items-center gap-2 hover:from-indigo-600 hover:to-purple-600 transition-all duration-300 hover:scale-105"
+            >
+              <FiFilter /> Filter Logs
+            </button>
+          </div>
+>>>>>>> 4051fcd6a9e131cd93274a0d2360bf047e3fd82a
         </div>
 
         {/* Security Logs Card */}
         <div className="bg-white p-6 rounded-2xl shadow-xl animate-slide-in-right">
           <div className="flex justify-between items-center mb-4">
+<<<<<<< HEAD
             
 
 
+=======
+>>>>>>> 4051fcd6a9e131cd93274a0d2360bf047e3fd82a
             <h3 className="text-xl font-bold flex items-center gap-2 text-gray-900">
               <FiShield className="text-indigo-500" /> Logged Security Events
             </h3>
