@@ -491,7 +491,7 @@ const Dashboard = () => {
 
           {/* Mental Lethargy */}
           <div className="bg-white p-6 rounded-2xl shadow-lg animate-slide-in-right  md:col-span-2">
-            <h3 className="text-lg font-semibold mb-4 text-purple-600">😴 Mental Lethargy</h3>
+            <h3 className="md:text-lg text-sm font-semibold mb-4 text-purple-600">😴 Mental Lethargy</h3>
             <ResponsiveContainer width="100%" height={150}>
               <LineChart data={healthData}>
                 <Line type="monotone" dataKey="sleepHours" stroke="#38A169" dot={false} />
