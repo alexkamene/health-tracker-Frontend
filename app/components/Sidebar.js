@@ -42,8 +42,8 @@ export default function SideBar() {
             </li>
             <li className="flex items-center space-x-3 p-3 rounded-lg hover:bg-indigo-600 transition-colors cursor-pointer">
               <FiWind className="w-5 h-5" />
-              <Link href="/pages/dashboard/challenges">
-                <span>Challenges</span>
+              <Link href="/pages/dashboard/water">
+                <span>Water intake</span>
               </Link>
             </li>
             {/* Leaderboard with Dropdown */}
@@ -53,18 +53,18 @@ export default function SideBar() {
                 onClick={toggleLeaderboard}
               >
                 <FiBarChart2 className="w-5 h-5" />
-                <span>Leaderboard</span>
+                <span>mental welness</span>
               </div>
               {isLeaderboardOpen && (
                 <ul className="absolute left-0 mt-1 w-48 bg-indigo-800 rounded-lg shadow-lg z-10">
                   <li className="p-2 hover:bg-indigo-700 rounded-t-lg">
-                    <Link href="/pages/dashboard/Leaderboard">rank</Link>
+                    <Link href="/pages/dashboard/sleep">sleep</Link>
                   </li>
                   <li className="p-2 hover:bg-indigo-700">
-                    <Link href="/pages/dashboard/Leaderboard/friends">Friends</Link>
+                    <Link href="/pages/dashboard/mental">mental</Link>
                   </li>
                   <li className="p-2 hover:bg-indigo-700 rounded-b-lg">
-                    <Link href="/pages/dashboard/Leaderboard/personal">Personal</Link>
+                    <Link href="/pages/dashboard/charts">Exercise</Link>
                   </li>
                 </ul>
               )}
@@ -126,8 +126,8 @@ export default function SideBar() {
                 </li>
                 <li className="flex items-center space-x-3 p-2 hover:bg-indigo-700 rounded-lg">
                   <FiWind className="w-5 h-5" />
-                  <Link href="/pages/dashboard/challenges" onClick={toggleMobileMenu}>
-                    Challenges
+                  <Link href="/pages/dashboard/water" onClick={toggleMobileMenu}>
+                    water intake
                   </Link>
                 </li>
                 {/* Leaderboard Dropdown in Mobile */}
@@ -137,23 +137,23 @@ export default function SideBar() {
                     onClick={toggleLeaderboard}
                   >
                     <FiBarChart2 className="w-5 h-5" />
-                    <span>Leaderboard</span>
+                    <span>mental wellness</span>
                   </div>
                   {isLeaderboardOpen && (
                     <ul className="pl-6 space-y-2 mt-1">
                       <li className="p-2 hover:bg-indigo-600 rounded-lg">
-                        <Link href="/pages/dashboard/Leaderboard" onClick={toggleMobileMenu}>
-                          Rank
+                        <Link href="/pages/dashboard/sleep" onClick={toggleMobileMenu}>
+                          sleep
                         </Link>
                       </li>
                       <li className="p-2 hover:bg-indigo-600 rounded-lg">
-                        <Link href="/pages/dashboard/Leaderboard/friends" onClick={toggleMobileMenu}>
-                          Friends
+                        <Link href="/pages/dashboard/mental" onClick={toggleMobileMenu}>
+                          mental
                         </Link>
                       </li>
                       <li className="p-2 hover:bg-indigo-600 rounded-lg">
-                        <Link href="/pages/dashboard/Leaderboard/personal" onClick={toggleMobileMenu}>
-                          Personal
+                        <Link href="/pages/dashboard/charts" onClick={toggleMobileMenu}>
+                          Reports
                         </Link>
                       </li>
                     </ul>

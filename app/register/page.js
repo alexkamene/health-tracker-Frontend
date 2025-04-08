@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -11,6 +12,7 @@ export default function RegisterPage() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState(""); // New state for confirmation
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [ip, setIp] = useState("");
@@ -36,6 +38,17 @@ export default function RegisterPage() {
     e.preventDefault();
     setError("");
     setLoading(true);
+
+    // Password confirmation check
+    if (password !== confirmPassword) {
+      setError("Passwords do not match!");
+      setLoading(false);
+      toast.error("❌ Passwords do not match!", {
+        position: "top-right",
+        autoClose: 5000,
+      });
+      return;
+    }
 
     try {
       const res = await axios.post("https://heath-tracker-backend.onrender.com/api/register", {
@@ -63,23 +76,23 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 to-green-50 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 relative overflow-hidden">
       {/* Background Animation */}
       <div className="absolute inset-0 z-0">
         <div className="w-96 h-96 bg-green-200 rounded-full absolute -top-48 -left-48 opacity-20 animate-blob"></div>
-        <div className="w-96 h-96 bg-indigo-200 rounded-full absolute -bottom-48 -right-48 opacity-20 animate-blob animation-delay-2000"></div>
+        <div className="w-96 h-96 bg-teal-200 rounded-full absolute -bottom-48 -right-48 opacity-20 animate-blob animation-delay-2000"></div>
       </div>
 
       {/* Toast Container */}
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
 
       {/* Register Card */}
-      <div className="relative z-10 bg-white p-8 md:p-10 rounded-2xl shadow-xl w-full max-w-md transform transition-all duration-500 hover:shadow-2xl animate-fade-in-up">
-        <h2 className="text-3xl font-bold text-gray-900 mb-3 text-center">
-          Join <span className="text-green-600">Health Tracker</span>
+      <div className="relative z-10 bg-white p-8 md:p-10 rounded-xl shadow-xl w-full max-w-md transform transition-all duration-500 hover:shadow-2xl animate-fade-in-up">
+        <h2 className="text-3xl font-bold text-center mb-3 text-green-700">
+          Join <span className="text-blue-600">Health Tracker</span>
         </h2>
-        <p className="text-gray-600 mb-6 text-center">
-          Sign up to kickstart your personalized health journey today!
+        <p className="text-teal-600 mb-6 text-center font-medium">
+          Sign up to kickstart your personalized health journey!
         </p>
 
         {error && (
@@ -90,12 +103,12 @@ export default function RegisterPage() {
           {/* Username Input */}
           <div className="relative group">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FiUser className="text-gray-500 group-hover:text-green-600 transition-colors" />
+              <FiUser className="text-green-500 group-hover:text-blue-600 transition-colors duration-300" />
             </div>
             <input
               type="text"
               placeholder="Enter your username"
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-700 placeholder-gray-400 transition-all duration-300"
+              className="w-full pl-10 pr-4 py-3 bg-green-50 border border-green-300 rounded-lg text-green-800 placeholder-green-400 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent transition-all duration-300 shadow-sm hover:shadow-md"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
@@ -105,12 +118,12 @@ export default function RegisterPage() {
           {/* Email Input */}
           <div className="relative group">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FiMail className="text-gray-500 group-hover:text-green-600 transition-colors" />
+              <FiMail className="text-green-500 group-hover:text-blue-600 transition-colors duration-300" />
             </div>
             <input
               type="email"
               placeholder="Your email address"
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-700 placeholder-gray-400 transition-all duration-300"
+              className="w-full pl-10 pr-4 py-3 bg-green-50 border border-green-300 rounded-lg text-green-800 placeholder-green-400 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent transition-all duration-300 shadow-sm hover:shadow-md"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -120,14 +133,29 @@ export default function RegisterPage() {
           {/* Password Input */}
           <div className="relative group">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FiLock className="text-gray-500 group-hover:text-green-600 transition-colors" />
+              <FiLock className="text-green-500 group-hover:text-blue-600 transition-colors duration-300" />
             </div>
             <input
               type="password"
               placeholder="Create a password"
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-700 placeholder-gray-400 transition-all duration-300"
+              className="w-full pl-10 pr-4 py-3 bg-green-50 border border-green-300 rounded-lg text-green-800 placeholder-green-400 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent transition-all duration-300 shadow-sm hover:shadow-md"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          {/* Confirm Password Input */}
+          <div className="relative group">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <FiLock className="text-green-500 group-hover:text-blue-600 transition-colors duration-300" />
+            </div>
+            <input
+              type="password"
+              placeholder="Confirm your password"
+              className="w-full pl-10 pr-4 py-3 bg-green-50 border border-green-300 rounded-lg text-green-800 placeholder-green-400 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent transition-all duration-300 shadow-sm hover:shadow-md"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
           </div>
@@ -135,7 +163,7 @@ export default function RegisterPage() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold md:text-lg text-sm shadow-md hover:bg-green-700 transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105"
+            className="w-full bg-gradient-to-r from-green-600 to-teal-600 text-white py-3 rounded-lg font-semibold md:text-lg text-sm shadow-md hover:from-green-700 hover:to-teal-700 transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105"
             disabled={loading}
           >
             {loading ? (
@@ -172,9 +200,12 @@ export default function RegisterPage() {
 
         {/* Login Link */}
         <div className="mt-6 md:text-xl text-sm text-center">
-          <p className="text-gray-600">
+          <p className="text-blue-600">
             Already have an account?{" "}
-            <Link href="/login" className="text-green-600 hover:text-green-700 font-semibold transition-colors">
+            <Link
+              href="/login"
+              className="text-teal-600 hover:text-teal-700 font-semibold transition-colors duration-300"
+            >
               Log In Now
             </Link>
           </p>
