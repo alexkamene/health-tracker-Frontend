@@ -104,9 +104,9 @@ const Navbar = () => {
                 <Link href="/pages/dashboard/Journal" className="hover:text-indigo-200 transition-colors">
                   Journals
                 </Link>
-                <Link href="/pages/dashboard/healthdata" className="hover:text-indigo-200 transition-colors">
-                  Health Data
-                </Link>
+                // <Link href="/pages/dashboard/healthdata" className="hover:text-indigo-200 transition-colors">
+                //   Health Data
+                // </Link>
                 <Link href="/pages/dashboard/adddata" className="hover:text-indigo-200 transition-colors">
                   Log Data
                 </Link>
@@ -249,13 +249,13 @@ const Navbar = () => {
                 >
                   Journals
                 </Link>
-                <Link
+                {/* <Link
                   href="/pages/dashboard/healthdata"
                   onClick={toggleMenu}
                   className="block py-2 hover:bg-indigo-600 rounded"
                 >
                   Health Data
-                </Link>
+                </Link> */}
                 <Link
                   href="/pages/dashboard/Profile"
                   onClick={toggleMenu}
