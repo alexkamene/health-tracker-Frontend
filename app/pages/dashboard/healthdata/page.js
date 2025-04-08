@@ -49,7 +49,7 @@ export default function Dashboard() {
   // Fetch meals
   const fetchMeals = async (token) => {
     try {
-      const res = await axios.get("http://localhost:3000/api/today", {
+      const res = await axios.get("https://heath-tracker-backend.onrender.com/api/today", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMeals(res.data);
@@ -62,7 +62,7 @@ export default function Dashboard() {
   // Fetch exercises
   const fetchExercises = async (token) => {
     try {
-      const res = await axios.get("http://localhost:3000/my-exercises", {
+      const res = await axios.get("https://heath-tracker-backend.onrender.com/my-exercises", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setExercises(res.data);
@@ -76,7 +76,7 @@ export default function Dashboard() {
   const searchFood = async () => {
     if (!query) return toast.warn("Enter a food to search!", { position: "top-right" });
     try {
-      const response = await axios.get("http://localhost:3000/search", { params: { query } });
+      const response = await axios.get("https://heath-tracker-backend.onrender.com/search", { params: { query } });
       setResults(response.data.hints || []);
     } catch (error) {
       console.error("Search failed:", error);
@@ -88,7 +88,7 @@ export default function Dashboard() {
   const addToMeal = async (foodName, calories, mealType, quantity = 1) => {
     try {
       await axios.post(
-        "http://localhost:3000/add",
+        "https://heath-tracker-backend.onrender.com/add",
         {
           foodName,
           calories: Math.round(calories * quantity),
@@ -111,7 +111,7 @@ export default function Dashboard() {
   const updateMealQuantity = async (id, newQuantity) => {
     try {
       await axios.put(
-        `http://localhost:3000/update/${id}`,
+        `https://heath-tracker-backend.onrender.com/update/${id}`,
         { quantity: newQuantity },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -126,7 +126,7 @@ export default function Dashboard() {
   // Delete meal
   const deleteMeal = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/delete/${id}`, {
+      await axios.delete(`https://heath-tracker-backend.onrender.com/delete/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Meal removed!", { position: "top-right" });
@@ -142,7 +142,7 @@ export default function Dashboard() {
     if (!target) return toast.warn("Enter a target value!", { position: "top-right" });
     try {
       await axios.post(
-        "http://localhost:3000/set-goal",
+        "https://heath-tracker-backend.onrender.com/set-goal",
         { type, target: parseInt(target), frequency },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -211,8 +211,8 @@ export default function Dashboard() {
 
       {/* Main Content */}
       <div className="relative z-10 max-w-7xl mx-auto">
-        <h1 className="text-3xl md:text-4xl font-bold text-center mb-8 text-gray-900 animate-fade-in-down">
-          Your Dashboard 🍽️🏃
+        <h1 className="text-2xl md:text-4xl font-bold text-center mb-8 text-gray-900 animate-fade-in-down">
+          Welcome to your Health Dashboard! 
         </h1>
 
         {/* Stats Overview */}
